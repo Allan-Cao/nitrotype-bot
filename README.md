@@ -25,4 +25,4 @@ To Run the bot, start a race and about when it starts, run in a console
 
 There is a delay of 2 seconds for it to start.
 
-Note, this was designed for a 1920x1080 monitor but can be modified for other resolutions. (see below)
+Note, this was designed for a 1920x1080 monitor but can be modified for other resolutions. 
