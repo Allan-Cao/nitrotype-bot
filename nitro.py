@@ -16,9 +16,6 @@ def screenshot(filename):
     with mss() as sct:
         screen = sct.shot(output=filename)
     return(screen)
-#test = screenshot("screen.png")
-#imageObject.crop((700,840,1210,950)).save('Img1.png')
-
 print("[Debug] Starting OCR Racer")
 import time
 time.sleep(2)
@@ -26,7 +23,6 @@ end = False
 
 while True:
     if end:
-        #print('[Debug] Race Over, On to the next!')
         time.sleep(5)
         pg.press("enter")
         time.sleep(5)
@@ -34,18 +30,16 @@ while True:
         while True:
             screenshot("screen.png")
             imageObject  = Image.open("screen.png")
-            imageObject.crop((700,840,1210,868)).save('waiting.png')
+            imageObject.crop((700,840,1210,868)).save('waiting.png') # THESE VALUES MUST CHANGE
             if (open("waiting.png","rb").read() != open("wait.png","rb").read()):
                 break
     screenshot("screen.png")
     imageObject  = Image.open("screen.png")
-    imageObject.crop((700,840,1210,868)).save('line.png')
-    imageObject.crop((700,868,1210,896)).save('isend.png')
+    imageObject.crop((700,840,1210,868)).save('line.png') # THESE VALUES MUST CHANGE
+    imageObject.crop((700,868,1210,896)).save('isend.png') # THESE VALUES MUST CHANGE
     end = open("isend.png","rb").read() == open("endstate.png","rb").read()
     queue = do_ocr("line.png")
-    #print('[Debug] Queue ' + queue)
     pg.typewrite(queue, interval=random.uniform(0.04, 0.05))
     pg.typewrite(",.'pgy")
     pg.press('space')
     time.sleep(0.2)
-
