@@ -1,6 +1,7 @@
 # nitrotype-bot
 
 Please use according at your own risk.
+UPDATE: Failsafes have been added so the bot can be run overnight!
 
 ## Requirements
 
@@ -23,6 +24,4 @@ OR
 To Run the bot, start a race and about when it starts, run in a console
 `python nitro.py`
 
-There is a delay of 2 seconds for it to start.
-
-Note, this was designed for a 1920x1080 monitor but can be modified for other resolutions. 
+Note, this was designed for a 1920x1080 monitor but can be modified for other resolutions. (change the crop regions and the images that it compares to-to match.)
