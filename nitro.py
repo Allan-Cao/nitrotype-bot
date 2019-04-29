@@ -7,6 +7,7 @@ import pyautogui as pg
 pg.FAILSAFE = False
 import pytesseract
 import random
+from autocorrect import spell
 import string
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 import cv2
@@ -44,7 +45,7 @@ def screenshot(filename):
     with mss() as sct:
         screen = sct.shot(output=filename)
     return(screen)
-print("[Debug] Starting OCR Racer in 2 seconds")
+print("[Debug] Starting OCR Racer")
 import time
 #time.sleep(2)
 end = False
@@ -54,11 +55,7 @@ while True:
     screenshot("screen.png")
     imageObject  = Image.open("screen.png")
     imageObject.crop((700,840,1210,868)).save('line.png') # THESE VALUES MUST CHANGE
-    #imageObject.crop((700,868,1210,896)).save('isend.png') # THESE VALUES MUST CHANGE
-    
-    #end = open("isend.png","rb").read() == open("endstate.png","rb").read()
-    
-    imageObject.crop((670,410,1230,470)).save('race.png')
+    imageObject.crop((700,410,1200,470)).save('race.png')
     if(open("race.png","rb").read() == open("RESULTS.png","rb").read()):
         print('[Debug] Race End Detected')
         pg.press("enter")
@@ -72,17 +69,19 @@ while True:
                 break
     imageObject.crop((700,840,1210,868)).save('line.png') # THESE VALUES MUST CHANGE
     queue = do_ocr("line.png")
+    print(queue)
     queue = queue.replace('’',"'")
-    #print(queue)
     refresh.pop(0)
     refresh.append(queue)
     queue = correct(queue)
-    pg.typewrite(queue, interval=random.uniform(0.03, 0.045))
+    queue = queue.replace('’',"'")
+    print(queue)
+    pg.typewrite(queue, interval=random.uniform(0.035, 0.045))
     if (random.randint(1,5)==3):
         pg.typewrite(random.choice(string.ascii_letters)+random.choice(string.ascii_letters))
     pg.press('space')
     pg.scroll(1000)
-    time.sleep(0.2)#750,300,1150,520
+    #time.sleep(0.2)
     if (len(set(refresh))==1 and (refresh[0] != 'Please wait. Typing content will')):
         print("[Debug] Failsafe Triggered")
         print(refresh)
