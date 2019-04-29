@@ -36,8 +36,9 @@ def correct(queue):
                 _word.insert(item[0],item[1])
             result_list.append("".join(_word))
     queue = " ".join(result_list)
-    queue+=random.choice(string.ascii_letters)
-    queue+=random.choice(string.ascii_letters)
+    queue+=",."
+    #queue+=random.choice(string.ascii_letters)
+    #queue+=random.choice(string.ascii_letters)
     return queue
 def do_ocr(filename):
     return((pytesseract.image_to_string(Image.open(filename))))
@@ -69,15 +70,16 @@ while True:
                 break
     imageObject.crop((700,840,1210,868)).save('line.png') # THESE VALUES MUST CHANGE
     queue = do_ocr("line.png")
-    print(queue)
+    #print(queue)
     queue = queue.replace('’',"'")
     refresh.pop(0)
     refresh.append(queue)
+    print(refresh)
     queue = correct(queue)
     queue = queue.replace('’',"'")
-    print(queue)
-    pg.typewrite(queue, interval=random.uniform(0.035, 0.045))
-    if (random.randint(1,5)==3):
+    #print(queue)
+    pg.typewrite(queue, interval=random.uniform(0.03, 0.04))
+    if (random.randint(1,4)==3):
         pg.typewrite(random.choice(string.ascii_letters)+random.choice(string.ascii_letters))
     pg.press('space')
     pg.scroll(1000)
@@ -86,14 +88,22 @@ while True:
         print("[Debug] Failsafe Triggered")
         print(refresh)
         pg.press('f5')
-        time.sleep(3)
+        time.sleep(5)
         refresh = ['%','%','%']
-    else:
+    if(refresh == ['Please wait. Typing content will', 'Please wait. Typing content will', 'Please wait. Typing content will']):
         screenshot("screen.png")
-        imageObject  = Image.open("screen.png")
-        imageObject.crop((750,300,1150,520)).save('isdq.png')
-        if (open("isdq.png","rb").read() == open("dq.png","rb").read()):
+        #imageObject  = Image.open("screen.png")
+        #imageObject.crop((750,300,1150,520)).save('isdq.png')
+        pg.click(x=1017, y=482)
+        time.sleep(5)
+        #if (open("isdq.png","rb").read() == open("dq.png","rb").read()):
+        #    print('[Debug] Disqualified (in another race)')
+        #    pg.press('f5')
+        #    time.sleep(3)
+    screenshot("screen.png")
+    imageObject  = Image.open("screen.png")
+    imageObject.crop((750,300,1150,450)).save('inactive.png')
+    if (open("inactive.png","rb").read() == open("ia.png","rb").read()):
+            print('[Debug] Disqualified (inactivity)')
             pg.press('f5')
             time.sleep(3)
-        else:
-            refresh = ['%','%','%']
