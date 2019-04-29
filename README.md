@@ -25,3 +25,7 @@ To Run the bot, start a race and about when it starts, run in a console
 `python nitro.py`
 
 Note, this was designed for a 1920x1080 monitor but can be modified for other resolutions. (change the crop regions and the images that it compares to-to match.)
+## Usage
+`python3 nitro.py` 
+OR
+`python nitro.py`
